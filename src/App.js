@@ -9,6 +9,9 @@ const PLACES_API_KEY = process.env.PLACES_API_KEY;
 
 const OPEN_WEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 
+console.log("test test");
+console.log(process.env);
+
 const DATE_DAY_NAME = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 class App extends Component {
