@@ -3,11 +3,11 @@ import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import axios from 'axios';
 import './App.css';
 
-const MAP_API_KEY = "";
-const GEOCODING_API_KEY = "";
-const PLACES_API_KEY = "";
+const MAP_API_KEY = process.env.MAP_API_KEY;
+const GEOCODING_API_KEY = process.env.GEOCODING_API_KEY;
+const PLACES_API_KEY = process.env.PLACES_API_KEY;
 
-const OPEN_WEATHER_API_KEY = "";
+const OPEN_WEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 
 const DATE_DAY_NAME = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
