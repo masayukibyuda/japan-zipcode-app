@@ -3,12 +3,6 @@ import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import axios from 'axios';
 import './App.css';
 
-const MAP_API_KEY = "";
-const GEOCODING_API_KEY = "";
-const PLACES_API_KEY = "";
-
-const OPEN_WEATHER_API_KEY = "";
-
 const DATE_DAY_NAME = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 class App extends Component {
@@ -69,7 +63,7 @@ class App extends Component {
   geoCodingAPI() {
     axios({
       method: 'post',
-      url: "https://maps.googleapis.com/maps/api/geocode/json?components=country:JP%7Cpostal_code:" + this.state.zipcode + "&key=" + GEOCODING_API_KEY,
+      url: "https://maps.googleapis.com/maps/api/geocode/json?components=country:JP%7Cpostal_code:" + this.state.zipcode + "&key=" + process.env.REACT_APP_GEOCODING_API_KEY,
       headers: { 
         'content-type': 'application/json', 
       }
@@ -103,7 +97,7 @@ class App extends Component {
   openWeatherAPI() {
     axios({
       method: 'post',
-      url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + this.state.lat + "&lon=" + this.state.lng + "&units=metric&exclude=current,minutely,hourly&appid=" + OPEN_WEATHER_API_KEY,
+      url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + this.state.lat + "&lon=" + this.state.lng + "&units=metric&exclude=current,minutely,hourly&appid=" + process.env.REACT_APP_OPEN_WEATHER_API_KEY,
       headers: { 
         'content-type': 'application/json', 
       }
@@ -141,7 +135,7 @@ class App extends Component {
   getTouristAttraction() {
     axios({
       method: 'post',
-      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.state.lat + "," + this.state.lng + "&radius=1000&type=tourist_attraction&key=" + PLACES_API_KEY,
+      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.state.lat + "," + this.state.lng + "&radius=1000&type=tourist_attraction&key=" + process.env.REACT_APP_PLACES_API_KEY,
       headers: { 'content-type': 'application/json'}
     })
     .then(result => {
@@ -315,5 +309,5 @@ class App extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: (MAP_API_KEY)
+  apiKey: (process.env.REACT_APP_MAP_API_KEY)
  })(App);
