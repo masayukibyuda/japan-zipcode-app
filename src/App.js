@@ -60,109 +60,109 @@ class App extends Component {
     });
   };
 
-  geoCodingAPI() {
-    axios({
-      method: 'post',
-      url: "https://maps.googleapis.com/maps/api/geocode/json?components=country:JP%7Cpostal_code:" + this.state.zipcode + "&key=" + GEOCODING_API_KEY,
-      headers: { 
-        'content-type': 'application/json', 
-      }
-    })
-    .then(result => {
-      if(result.data.status === "OK")
-      {
-        this.setState({
-          prefecture : result.data.results[0].address_components[result.data.results[0].address_components.length - 2].long_name,
-          city: result.data.results[0].address_components[result.data.results[0].address_components.length - 3].long_name,
-          subcity: result.data.results[0].address_components[result.data.results[0].address_components.length - 4].long_name,
-          lat: result.data.results[0].geometry.location.lat,
-          lng: result.data.results[0].geometry.location.lng
-        });
+  // geoCodingAPI() {
+  //   axios({
+  //     method: 'post',
+  //     url: "https://maps.googleapis.com/maps/api/geocode/json?components=country:JP%7Cpostal_code:" + this.state.zipcode + "&key=" + GEOCODING_API_KEY,
+  //     headers: { 
+  //       'content-type': 'application/json', 
+  //     }
+  //   })
+  //   .then(result => {
+  //     if(result.data.status === "OK")
+  //     {
+  //       this.setState({
+  //         prefecture : result.data.results[0].address_components[result.data.results[0].address_components.length - 2].long_name,
+  //         city: result.data.results[0].address_components[result.data.results[0].address_components.length - 3].long_name,
+  //         subcity: result.data.results[0].address_components[result.data.results[0].address_components.length - 4].long_name,
+  //         lat: result.data.results[0].geometry.location.lat,
+  //         lng: result.data.results[0].geometry.location.lng
+  //       });
 
-        this.openWeatherAPI();
-        this.getTouristAttraction();
-      }
-      else
-      {
-        throw result.data.status;
-      }
-    })
-    .catch(error => {
-      this.setState({ 
-        error: error 
-      });
-    });
-  }
+  //       this.openWeatherAPI();
+  //       this.getTouristAttraction();
+  //     }
+  //     else
+  //     {
+  //       throw result.data.status;
+  //     }
+  //   })
+  //   .catch(error => {
+  //     this.setState({ 
+  //       error: error 
+  //     });
+  //   });
+  // }
 
-  openWeatherAPI() {
-    axios({
-      method: 'post',
-      url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + this.state.lat + "&lon=" + this.state.lng + "&units=metric&exclude=current,minutely,hourly&appid=" + OPEN_WEATHER_API_KEY,
-      headers: { 
-        'content-type': 'application/json', 
-      }
-    })
-    .then(result => {
-      let weather = [];
+  // openWeatherAPI() {
+  //   axios({
+  //     method: 'post',
+  //     url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + this.state.lat + "&lon=" + this.state.lng + "&units=metric&exclude=current,minutely,hourly&appid=" + OPEN_WEATHER_API_KEY,
+  //     headers: { 
+  //       'content-type': 'application/json', 
+  //     }
+  //   })
+  //   .then(result => {
+  //     let weather = [];
 
-      for(let i = 0; i < 3; ++i)
-      {
-        let date = new Date(result.data.daily[i].dt * 1000);
+  //     for(let i = 0; i < 3; ++i)
+  //     {
+  //       let date = new Date(result.data.daily[i].dt * 1000);
 
-        let json = {
-          date: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + DATE_DAY_NAME[date.getDay()],
-          status: result.data.daily[i].weather[0].main,
-          icon: "http://openweathermap.org/img/w/" + result.data.daily[i].weather[0].icon + ".png",
-          tempMin: result.data.daily[i].temp.min,
-          tempMax: result.data.daily[i].temp.max
-        };
+  //       let json = {
+  //         date: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + DATE_DAY_NAME[date.getDay()],
+  //         status: result.data.daily[i].weather[0].main,
+  //         icon: "http://openweathermap.org/img/w/" + result.data.daily[i].weather[0].icon + ".png",
+  //         tempMin: result.data.daily[i].temp.min,
+  //         tempMax: result.data.daily[i].temp.max
+  //       };
 
-        weather.push(json);
-      }
+  //       weather.push(json);
+  //     }
 
-      this.setState({ 
-        weather: weather 
-      });
+  //     this.setState({ 
+  //       weather: weather 
+  //     });
 
-    })
-    .catch(error => {
-      this.setState({ 
-        error: error 
-      });
-    });
-  }
+  //   })
+  //   .catch(error => {
+  //     this.setState({ 
+  //       error: error 
+  //     });
+  //   });
+  // }
   
-  getTouristAttraction() {
-    axios({
-      method: 'post',
-      url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.state.lat + "," + this.state.lng + "&radius=1000&type=tourist_attraction&key=" + PLACES_API_KEY,
-      headers: { 'content-type': 'application/json'}
-    })
-    .then(result => {
-      let touristAttraction = [];
+  // getTouristAttraction() {
+  //   axios({
+  //     method: 'post',
+  //     url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.state.lat + "," + this.state.lng + "&radius=1000&type=tourist_attraction&key=" + PLACES_API_KEY,
+  //     headers: { 'content-type': 'application/json'}
+  //   })
+  //   .then(result => {
+  //     let touristAttraction = [];
       
-      let count = result.data.results.length;
-      for(let i = 0; i < count; ++i)
-      {
-        let json = {
-          name: result.data.results[i].name,
-          lat: result.data.results[i].geometry.location.lat,
-          lng: result.data.results[i].geometry.location.lng,
-        }
+  //     let count = result.data.results.length;
+  //     for(let i = 0; i < count; ++i)
+  //     {
+  //       let json = {
+  //         name: result.data.results[i].name,
+  //         lat: result.data.results[i].geometry.location.lat,
+  //         lng: result.data.results[i].geometry.location.lng,
+  //       }
 
-        touristAttraction.push(json);
-      }
+  //       touristAttraction.push(json);
+  //     }
 
-      this.setState({ 
-        touristAttraction: touristAttraction 
-      });
-    })
-    .catch(error => {
-      this.setState({ 
-        error: error 
-      });
-    });
-  }
+  //     this.setState({ 
+  //       touristAttraction: touristAttraction 
+  //     });
+  //   })
+  //   .catch(error => {
+  //     this.setState({ 
+  //       error: error 
+  //     });
+  //   });
+  // }
 
   handleFormSubmit( e ) {
     e.preventDefault();
