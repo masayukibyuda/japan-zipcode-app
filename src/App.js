@@ -97,7 +97,7 @@ class App extends Component {
   openWeatherAPI() {
     axios({
       method: 'post',
-      url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + this.state.lat + "&lon=" + this.state.lng + "&units=metric&exclude=current,minutely,hourly&appid=" + process.env.REACT_APP_OPEN_WEATHER_API_KEY,
+      url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + this.state.lat + "&lon=" + this.state.lng + "&units=metric&exclude=current,minutely,hourly&appid=" + process.env.REACT_APP_OPENWEATHER_API_KEY,
       headers: { 
         'content-type': 'application/json', 
       }
