@@ -3,17 +3,6 @@ import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import axios from 'axios';
 import './App.css';
 
-const MAP_API_KEY = process.env.MAP_API_KEY;
-const GEOCODING_API_KEY = process.env.GEOCODING_API_KEY;
-const PLACES_API_KEY = process.env.PLACES_API_KEY;
-
-const OPEN_WEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
-
-console.log("test test");
-console.log(process);
-console.log(process.env);
-
-
 const DATE_DAY_NAME = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 class App extends Component {
@@ -188,7 +177,23 @@ class App extends Component {
       error: null,
     });
 
-    this.geoCodingAPI();
+    //this.geoCodingAPI();
+    axios({
+      method : "post",
+      url : "https://974wqgz2kd.execute-api.us-east-2.amazonaws.com/staging/hello",
+      headers: { 'content-type': 'application/json'},
+      data: {
+        ZIP_CODE: this.zipcode
+      }
+    })
+    .then(result => {
+      console.log("success!");
+      console.log(result);
+    })
+    .catch(error => {
+      console.log("failed!");
+      console.log(error);
+    });
   }
 
   render()
@@ -320,5 +325,5 @@ class App extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: (MAP_API_KEY)
+  apiKey: (process.env.REACT_APP_MAP_API)
  })(App);
